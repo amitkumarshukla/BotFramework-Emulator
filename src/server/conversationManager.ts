@@ -128,7 +128,7 @@ export class Conversation {
           if(!activity.entities) {
                 activity.entities = [];
             }
-            activity.entities.push({"Type" : "CurrentState", "CurState" : this.currentDialogState})
+            activity.entities.push({"Type" : "ConversationContext", "NextState" : this.currentDialogState})
         }
         if (bot) {
             activity.serviceUrl = emulator.framework.getServiceUrl(bot.botUrl);
@@ -220,9 +220,9 @@ export class Conversation {
         visitor.traverseActivity(activity);
 
         for (var item of activity.entities) {
-            if(item.type === "CurrentState"){
+            if(item.type === "ConversationContext"){
                 this.isCurrentDialogStateDefined = true;
-                this.currentDialogState = item.curState;
+                this.currentDialogState = item.nextState;
             }
         }   
 
